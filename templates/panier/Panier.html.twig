@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('assets/css/styleFooterbar0.css') }}" rel="stylesheet">
+{% endblock %}
+{% block title %}Mon panier :{% endblock %}
+
+{% block body %}
+
+<h1 class="text-center"><u>Récapitulatif de votre panier : </u></h1>
+
+<div class="table-responsive table-xl">
+<table class="table table-hover table-light border-dark">
+  <thead>
+    <tr>
+      <th scope="col">Quantity</th>
+      <th scope="col">Nom de l'article</th>
+      <th scope="col">Sous titre</th>
+      <th scope="col">Prix</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+{%for Article in Cart %}
+
+    <tr class="table-light">
+      <td>{{Article.quantite}}</td>
+      <td>{{Article.product.name}}</td>
+      <td>{{Article.product.subtitle}}</td>
+      <td>{{(Article.product.price * Article.quantite)*0.01}} €</td>
+      <td>autre</td>
+    </tr>
+
+{% endfor %}
+</tbody>
+</table>
+</div>
+  <ul class="fa-ul">
+    <li><a href="{{path('profil')}}" title="Précédent"><i class="fa-solid fa-arrow-left"></i> Précédent</a></li>
+  </ul>
+
+{% endblock %}

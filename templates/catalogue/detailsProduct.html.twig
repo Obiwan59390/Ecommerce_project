@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('assets/css/styleFooterbar0.css') }}" rel="stylesheet">
+{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block body %}
+<h1 class="text-center"><u>Détails de mon produit :</u></h1>
+
+<div class="row product-container text-center">
+    <div class="col-md-5">
+        <img class="img-fluid img-thumbnail rounded" src="/assets/images/products/{{ product.image }}" alt="{{ product.name }}">
+    </div>
+    <div class="col-md-7 my-auto">
+        <div class="product-item">
+            <h3>{{ product.name }}</h3>
+            <span class="product-subtitle">{{ product.subtitle }}</span>
+            <span class="product-price">{{ (product.price / 100)|number_format(2, ',', '.') }} €</span><br>
+            <span class="product-description">{{ product.description }}</span>
+        </div>
+        <a href="/product/{{ product.id }}" class="btn btn-primary">Ajouter au panier</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block jsStripe %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    function delete_flash(flash){
+        $(flash).parent().remove()
+    }
+</script>
+
+{% endblock %}

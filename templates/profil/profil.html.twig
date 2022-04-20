@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('assets/css/styleFooterbar0.css') }}" rel="stylesheet">
+{% endblock %}
+{% block title %}
+
+Hello {{ app.user.prenom }} 
+
+{% endblock %}
+
+{% block body %}
+
+<div class="py-2">
+<h1 class="text-center"><u>Mon profil</u></h1>
+<div class="d-flex justify-content-center">
+<ul class="text-center list-group w-50 ">
+    <li class="list-group-item mb-2 "><a href="{{ path('modifierPassword') }}">Modifier le mot de passe</a></li>
+    <li class="list-group-item mb-2 "><a href="{{ path('create_adresse') }}">Ajouter une adresse</a></li>
+    <li class="list-group-item mb-2 "><a href="{{ path('adresse_controler') }}">Mettre à jour mes adresses</a></li>
+    <li class="list-group-item mb-2 "><a href={{ path('panier') }}>Panier</a></li>
+    <li class="list-group-item  ">Historique de mes commandes</li>
+</ul>
+</div>
+{% endblock %}
+

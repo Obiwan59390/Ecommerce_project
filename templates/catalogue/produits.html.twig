@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catalogue{% endblock %}
+
+{% block body %}
+<div class="row ">
+    <div class="col-md-2 border-end border-dark">
+        <h4><u>Mes filtres:</u></h4>
+        {{ form(f) }}
+    </div>
+    <div class="col-sm-9">
+        <div class="row product-container">
+            {% for product in products %}
+                <div class="col-md-4">
+                    <div class="product-item text-center">
+                        <a href="{{ path('product', { 'id' : product.id }) }}"><img class="img-fluid img-thumbnail rounded" src="/assets/images/products/{{ product.image }}" alt="{{ product.name }}"></a>
+                        <h5>{{ product.name }}</h5>
+                        <span class="product-subtitle">{{ product.subtitle }}</span>
+                        <span class="product-price">{{ (product.price / 100)|number_format(2, ',', '.') }} €</span>
+                        <br><a href="/add_cart/{{ product.id }}" class="btn btn-primary">Ajouter au panier</a>
+                    </div>               
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block jsStripe %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    function delete_flash(flash){
+        $(flash).parent().remove()
+    }
+</script>
+
+{% endblock %}

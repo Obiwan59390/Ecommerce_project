@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recap{% endblock %}
+
+{% block subtitle %}Aperçu de ma commande{% endblock %}
+
+{% block jsStripe %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <strong>Adresse de livraison choisie</strong><br>
+            <hr>
+            {{ adrL|replace({'[br]' : '<br/>'})|raw }}
+            <hr>
+        </div>
+        <div>
+            <strong>Adresse de facturation choisie</strong><br>
+            <hr>
+            {{ adrF|replace({'[br]' : '<br/>'})|raw }}
+            <hr>
+        </div>
+        <div>
+            <strong>Transporteur choisi</strong><br>
+            <hr>
+            {{ transport.societe }} <br>
+            {{ transport.description }} <br>
+            {{ (transport.prix)|number_format(2, ',','.') }} €
+            <hr>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h2>Récapitulatif de mon panier</h2>
+        <div>
+            {% set t = null %}
+            {% for product in panier %}
+                <div class="row">
+                    <div class="col-2 my-2"><img class="img-panier img-fluid img-thumbnail rounded" src="/assets/images/products/{{ product.product.image }}" alt="{{ product.product.name }}"></div>
+                    <div class="col-2">{{ product.product.name }}</div>
+                    <div class="col-2">{{ product.quantite }}</div>
+                    <div class="col-2">{{ (product.product.price / 100)|number_format(2, ',', '.') }} €</div>
+                    <div class="col-2">{{ ((product.product.price * product.quantite) / 100)|number_format(2, ',', '.') }} €</div>
+                </div>
+                {% set t = t + (product.product.price * product.quantite) %}
+            {% endfor %}
+            <hr>
+            <div class="text-end">
+                <strong>Sous total : </strong>{{ (t / 100)|number_format(2,',','.') }} € <br>
+                <strong>Frais de livraison : </strong>{{ (transport.prix)|number_format(2,',','.') }} € <br>
+                <strong>total à payer : </strong>{{ ((t / 100 + transport.prix))|number_format(2,',','.') }} € <br>
+            </div> 
+        </div>
+        <hr>
+        <div class="text-end">
+            <a id="btnPayer" href="stripe_create_session" class="btn btn-success btn-block">Payer | {{ ((t / 100 + transport.prix))|number_format(2,',','.') }} €</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block jsStripe %}
+    <script type="trxt/javascript">
+        // cle public => reception evenement
+        var stripe =Stripe("pk_test_51KT0x4KYkuW3mSypjpympNo5UVdWA4T9g9z0a2o2tRHeOcsGfWSf4PbdJtX4KK6JSDNWZlbZPf6pm6XWczXRRbQh00PEOBrdWh");
+        var checkBtn = document.getElementById('btnPayer');
+        checkBtn.addEventListener("click", function () {
+            fetch("/commande/create-session/{{ reference }}", 
+                { method: 'POST'
+            })
+            .then(function (response){
+                return response.json();
+            })
+            .then(function (session){
+                return stripe.redirectToCheckout({sessionId : session.id})
+            })
+            .then(function (result){
+                if(result.error){
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error){
+                console.error("Error:", error);
+            });
+        });
+    </script>
+    {% endblock %}
+    
+

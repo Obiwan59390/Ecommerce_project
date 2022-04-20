@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('assets/css/styleFooterbar0.css') }}" rel="stylesheet">
+{% endblock %}
+{% block title %}Mes adresses:{% endblock %}
+
+{% block body %}
+<div class="row row-cols-3 row-cols-lg-' g-1 g-lg-1">
+{% for Adresse in Adresses %}
+<div class="row col-4 p-3">
+  <div class="card border-danger bg-dark my-2 border-2 " >
+    <div class="card-body ">
+      <h5 class="card-title text-light text-center">{{Adresse.libelle}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted text-center"> {{Adresse.pays}}</h6>
+      <p class="card-text text-light text-center">{{Adresse.texteAdresse}} {{Adresse.cp}} {{Adresse.ville}}</p>
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+</div>
+
+  <ul class="fa-ul">
+    <li><a href="{{path('profil')}}" title="Précédent"><i class="fa-solid fa-arrow-left"></i> Précédent</a></li>
+  </ul>
+
+{% endblock %}

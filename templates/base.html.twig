@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
+            <link href="{{asset('assets/FAwesome/css/all.css')}}" rel="stylesheet">
+            <link rel="icon" type="image/png" href="{{asset('assets/images/favicon.ico')}}">
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
+            {% endblock %}
+
+    </head>
+    <body>
+
+  
+
+        {% block menu %}
+       {{ include('menu.html.twig') }}
+        {% endblock %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}}
+    
+<i class="fa-solid fa-rectangle-xmark position-absolute top-50 end-0 translate-middle-y" onclick=delete_flash(this)></i>
+</div>
+    {% endfor %}
+        {% block body %}{% endblock %}
+
+
+
+       {% block footer %}
+            {{ include('footer.html.twig') }}
+       {% endblock %}
+    </body>
+    {% block jsStripe %}{% endblock %}
+</html>

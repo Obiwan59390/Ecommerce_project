@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('assets/css/styleFooterbar0.css') }}" rel="stylesheet">
+{% endblock %}
+{% block title %}Ajouter une adresse{% endblock %}
+
+{% block body %}
+
+<div class="text-center col-10 mx-auto border border-dark rounded m-3 ">
+
+    <h1 class="h3 mb-3 font-weight-normal text-center p-3"><u>Ajouter une adresse:</u></h1>
+
+{{ form(createAdresse) }}
+
+</div>
+
+  <ul class="fa-ul">
+    <li><a href="{{path('profil')}}" title="Précédent"><i class="fa-solid fa-arrow-left"></i> Précédent</a></li>
+  </ul>
+
+{% endblock %}

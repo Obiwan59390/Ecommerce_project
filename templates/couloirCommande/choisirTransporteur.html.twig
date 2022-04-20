@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choix mode de transport{% endblock %}
+
+{% block subtitle %}Choisir livreur{% endblock %}
+
+{% block body %}
+<!-- {{ dump(adrL) }} -->
+    <div class="row">
+        <div class="col">
+            {% set formhtml %}
+                {% set params = { 'adrL' : adrL, 'adrF' : adrF } %}
+                {{ form_start(f, { action : path('recap', params)}) }}
+                    {{ form_row(f.transporteurs,
+                        {
+                            'label_attr' : {'class' : 'fs-6'},
+                            'attr' : {'class' : 'alert alert-info'}
+                        }) 
+                    }}
+                    {{ form_widget(f) }}
+                {{ form_end(f) }}
+            {% endset %}
+            {{ formhtml|replace({'[br]' : '<br/>'})|raw }}
+        </div>
+    </div>
+
+{% endblock %}
